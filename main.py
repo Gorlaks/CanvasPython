@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
-from modules.store.init_store import InitStore
+from modules.auth import auth_repository
+from modules.routers import auth, user
 
 app = FastAPI()
 
@@ -13,9 +13,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
+app.include_router(user.router)
 
-def set_up_project():
-    store = InitStore("mongodb+srv://admin:1234@cluster0.wqhlb.azure.mongodb.net/test?retryWrites=true&w=majority")
-    store.ping()
+# def set_up_project():
+#     # user_collection = store.get_collection('User')
+#     # auth_repository = auth_repository.AuthRepository(user_collection)
+#     store.ping()
 
-set_up_project()
+# set_up_project()
