@@ -1,10 +1,11 @@
 from fastapi import APIRouter
 
-from ..auth.auth_repository import AuthRepository
+from models.auth import User
+from ..auth.auth_service import AuthService
 
 router = APIRouter()
 
-@router.get("/login")
-def login():
-  auth_repository = AuthRepository()
-  return auth_repository.get_user_data()
+@router.post("/login")
+def login(user_data: User):
+  auth_service = AuthService()
+  return auth_service.login(user_data.login)
