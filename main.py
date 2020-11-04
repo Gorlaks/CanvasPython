@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from modules.auth import auth_repository
-from modules.routers import auth, user
+from modules.routers import auth
 
 app = FastAPI()
 
@@ -14,11 +14,3 @@ app.add_middleware(
 )
 
 app.include_router(auth.router)
-app.include_router(user.router)
-
-# def set_up_project():
-#     # user_collection = store.get_collection('User')
-#     # auth_repository = auth_repository.AuthRepository(user_collection)
-#     store.ping()
-
-# set_up_project()
