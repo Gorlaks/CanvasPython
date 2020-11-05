@@ -1,7 +1,7 @@
 from typing import Dict
 
-from ..auth.auth_repository import AuthRepository
-from models.auth import User
+from .auth_repository import AuthRepository
+from ...models.auth import User
 
 class AuthService:
   """Class for the auth module to proccess an information
