@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from models.auth import User
-from ..auth.auth_service import AuthService
+from canvas.models.auth import User
+from canvas.modules.auth.auth_service import AuthService
 
 router = APIRouter()
 

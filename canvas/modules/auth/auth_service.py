@@ -1,7 +1,8 @@
 from typing import Dict
 
-from ..auth.auth_repository import AuthRepository
-from models.auth import User
+from canvas.modules.store.db import db
+from canvas.modules.auth.auth_repository import AuthRepository
+from canvas.models.auth import User
 
 class AuthService:
   """Class for the auth module to proccess an information
@@ -27,6 +28,7 @@ class AuthService:
 
   def __init__(self):
     self.auth_repository = AuthRepository()
+    self.user_collection = db["User"]
 
   def login(self, login: str) -> Dict[str, str]:
     """Proccess user data and return it otherwise

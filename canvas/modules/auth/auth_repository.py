@@ -1,4 +1,4 @@
-from ..store.db import db
+from canvas.modules.store.db import db
 
 class AuthRepository:
   """Class for the auth module to get some information about a given user
