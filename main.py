@@ -18,7 +18,7 @@ app.add_middleware(
 )
 
 @app.exception_handler(ResponseException)
-async def exception_handler(request: Request, exp: ResponseException):
+async def response_exception_handler(request: Request, exp: ResponseException):
     return JSONResponse(
         status_code=exp.status_code,
         content={

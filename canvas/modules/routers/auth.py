@@ -9,7 +9,7 @@ auth_service = AuthService()
 
 @router.post("/login")
 def login(user_data: User) -> User:
-  return auth_service.login(user_data.login)
+  return auth_service.login(user_data.login, user_data.password)
 
 @router.post("/registration")
 def registration(user_data: User) -> User:

@@ -36,7 +36,7 @@ class AuthService:
     self.auth_repository = AuthRepository()
     self.user_collection = db["User"]
 
-  def login(self, login: str) -> Dict[str, str]:
+  def login(self, login: str, password: str) -> Dict[str, str]:
     """Proccess user data and return it otherwise
     error
     
@@ -49,15 +49,16 @@ class AuthService:
     user_data: User = self.auth_repository.get_user_data(login)
 
     if (user_data != None):
+      password_is_correct = verify_password(user_data["password"], password)
 
+      if password_is_correct:
+        response = {
+          "id": str(user_data["_id"])
+        }
+        return response
+      else:
+        raise ResponseException("Password is incorrect")
 
-      response = {
-        "id": str(user_data["_id"]),
-        "login": user_data["login"],
-        "email": user_data["email"]
-      }
-
-      return response
     else:
       raise ResponseException("Invalid login")
 
@@ -85,7 +86,7 @@ class AuthService:
       "email": user_data.email,
       "login": user_data.login,
       "password": user_data.password,
-      "registration date": registration_date
+      "registration_date": registration_date
     }).inserted_id
 
     if inserted_id != None:
