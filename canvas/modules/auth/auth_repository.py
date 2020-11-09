@@ -1,4 +1,5 @@
 from canvas.modules.store.db import db
+from canvas.models.auth import User
 
 class AuthRepository:
   """Class for the auth module to get some information about a given user
@@ -22,7 +23,7 @@ class AuthRepository:
   def __init__(self):
     self.user_collection = db["User"]
 
-  def get_user_data(self, login: str):
+  def get_user_data(self, login: str) -> User:
     """Method for getting a data about an user
     
     Parameters
