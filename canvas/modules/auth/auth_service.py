@@ -6,9 +6,9 @@ import pytz
 from canvas.modules.store.db import db
 from canvas.modules.auth.auth_repository import AuthRepository
 from canvas.models.auth import User
-from canvas.utils.hashing import hash_password
+from canvas.utils.hashing import hash_password, verify_password
 from canvas.utils.helpers import destruct_dict
-from canvas.utils.data import default_response_to_client
+from canvas.utils.exceptions import ResponseException
 
 class AuthService:
   """Class for the auth module to proccess an information
@@ -47,7 +47,10 @@ class AuthService:
     """
 
     user_data: User = self.auth_repository.get_user_data(login)
+
     if (user_data != None):
+
+
       response = {
         "id": str(user_data["_id"]),
         "login": user_data["login"],
@@ -56,8 +59,7 @@ class AuthService:
 
       return response
     else:
-      default_response_to_client["message"] = "Invalid login"
-      return JSONResponse(status_code=404, content=default_response_to_client)
+      raise ResponseException("Invalid login")
 
   
   def registration(self, user_data: User) -> Dict[str, str]:
@@ -72,11 +74,9 @@ class AuthService:
     email, login, password = destruct_dict(user_data)
 
     if login == "":
-      default_response_to_client["message"] = "Login is empty"
-      return JSONResponse(status_code=404, content=default_response_to_client)
+      raise ResponseException("Login is empty")
     if password == "":
-      default_response_to_client["message"] = "Password is empty"
-      return JSONResponse(status_code=404, content=default_response_to_client)
+      raise ResponseException("Password is empty")
 
     user_data.password = hash_password(user_data.password)
     registration_date = datetime.datetime.now(pytz.timezone('Europe/Moscow'))
@@ -89,8 +89,9 @@ class AuthService:
     }).inserted_id
 
     if inserted_id != None:
-      default_response_to_client["code"] = "0"
-      default_response_to_client["message"] = "Success"
-      return default_response_to_client
+      return {
+        "code": "0",
+        "message": "Success"
+      }
     else:
-      return default_response_to_client
+      raise ResponseException("No such user exists")

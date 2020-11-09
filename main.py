@@ -1,9 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 from canvas.modules.auth import auth_repository
 from canvas.modules.routers import auth
+from canvas.utils.exceptions import ResponseException
 
 app = FastAPI()
 
@@ -14,6 +16,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.exception_handler(ResponseException)
+async def exception_handler(request: Request, exp: ResponseException):
+    return JSONResponse(
+        status_code=exp.status_code,
+        content={
+            "code": exp.error_code,
+            "message": exp.message
+        }
+    )
 
 app.include_router(auth.router)
 
