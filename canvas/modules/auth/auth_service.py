@@ -79,8 +79,13 @@ class AuthService:
     if password == "":
       raise ResponseException("Password is empty")
 
+    existed_user_data: User = self.auth_repository.get_user_data(login)
+
     user_data.password = hash_password(user_data.password)
     registration_date = datetime.datetime.now(pytz.timezone('Europe/Moscow'))
+
+    if (existed_user_data != None):
+      return ResponseException("Such user already exists")
 
     inserted_id = self.user_collection.insert_one({
       "email": user_data.email,
