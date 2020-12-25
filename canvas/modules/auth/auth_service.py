@@ -52,10 +52,10 @@ class AuthService:
       password_is_correct = verify_password(user_data["password"], password)
 
       if password_is_correct:
-        response = {
-          "id": str(user_data["_id"])
+        return {
+          "id": str(user_data["_id"]),
+          "login": user_data["login"]
         }
-        return response
       else:
         raise ResponseException("Password is incorrect")
 
