@@ -2,7 +2,7 @@ from pymongo import MongoClient
 
 class DB:
   def ConnectMongoDB(self):
-    connection_string: str = "mongodb+srv://admin:1234@cluster0.wqhlb.azure.mongodb.net/test?retryWrites=true&w=majority"
+    connection_string: str = "localhost:27017"
     client = MongoClient(connection_string)
     db = client["Canvas"]
     return db
