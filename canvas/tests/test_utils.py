@@ -1,7 +1,6 @@
 import unittest
 
-from canvas.utils.hashing import hash_password
-
+# from canvas.utils.hashing import hash_password
 
 class TestUtils(unittest.TestCase):
 
@@ -9,5 +8,4 @@ class TestUtils(unittest.TestCase):
     self.assertEqual(2, 2)
 
 
-if __name__ == "__main__":
-  unittest.main()
+unittest.main()

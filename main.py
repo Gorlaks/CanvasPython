@@ -1,7 +1,7 @@
+import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
 
 from canvas.modules.auth import auth_repository
 from canvas.modules.routers import auth, user, test
@@ -16,6 +16,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.exception_handler(ResponseException)
 async def response_exception_handler(request: Request, exp: ResponseException):
