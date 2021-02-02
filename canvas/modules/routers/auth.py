@@ -5,8 +5,8 @@ from canvas.models.auth import User
 from canvas.models.response import Response
 from canvas.modules.auth.auth_service import AuthService
 
-from ...utils.jwt import create_access_token
-from ...utils.jwt import ACCESS_TOKEN_EXPIRES_MINUTES
+from canvas.utils.jwt import create_access_token, get_current_user
+from canvas.utils.jwt import ACCESS_TOKEN_EXPIRES_MINUTES
 
 router = APIRouter()
 
@@ -23,7 +23,7 @@ def login(user_data: User) -> Response:
             data={"sub": authorized_user_data["login"]},
             expires_delta=access_token_expires
         )
-    return {"access_token": access_token}
+    return { "access_token": access_token }
 
 
 @router.post("/registration")
