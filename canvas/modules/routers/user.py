@@ -1,15 +1,17 @@
 from fastapi import APIRouter
 from typing import List
 
-from canvas.modules.user.user_repository import UserRepository 
+from canvas.modules import modules
 
 from canvas.models.user import UserData
 from canvas.models.canvas import Canvas
 
+from canvas.utils.jwt import get_current_user
+
 router = APIRouter()
 
-userRepository = UserRepository()
-
-@router.post("/users_canvases_list")
-def get_users_canvases_list(used_data: UserData) -> List[Canvas]:
-  return ["Hello", "World", "!"]
+@router.post("/get_user_canvases")
+def get_user_canvases(user_token: str) -> List[Canvas]:
+  user = get_current_user(user_token)
+  # return modules.UserRepository.get_user_canvases()
+  return user
