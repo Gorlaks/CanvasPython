@@ -17,3 +17,5 @@ class AuthRepository:
     """
 
     return self.user_collection.find_one({"login": login})
+
+auth_repository = AuthRepository()

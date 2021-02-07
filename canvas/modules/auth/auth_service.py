@@ -101,3 +101,5 @@ class AuthService:
       }
     else:
       raise ResponseException("No such user exists")
+
+auth_service = AuthService()

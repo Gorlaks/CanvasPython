@@ -6,7 +6,7 @@ from fastapi import HTTPException, status
 
 from canvas.models.jwt import TokenData
 from canvas.models.user import UserData
-from canvas.modules.modules import modules
+from canvas.modules.auth.auth_repository import auth_repository
 
 SECRET_KEY = "c603f8eb5cf8796accced19850d80ca93cb397b39e29e73e7d4df581022ea709"
 ALGORITHM = "HS256"
@@ -37,7 +37,7 @@ def get_current_user(token: str) -> UserData:
     token_data = TokenData(username=username)
   except JWTError:
     raise credentials_exception
-  data = modules.auth_repository.get_user_data(username)
+  data = auth_repository.get_user_data(username)
   if data["login"] is None:
     raise credentials_exception
-  return data
+  return { "login": username }
