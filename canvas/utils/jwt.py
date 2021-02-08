@@ -40,4 +40,4 @@ def get_current_user(token: str) -> UserData:
   data = auth_repository.get_user_data(username)
   if data["login"] is None:
     raise credentials_exception
-  return { "login": username }
+  return { "id": str(data["_id"]), "login": username }

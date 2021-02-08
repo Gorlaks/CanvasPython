@@ -3,15 +3,12 @@ from datetime import timedelta
 
 from canvas.models.auth import User
 from canvas.models.response import Response
-from canvas.modules.auth.auth_service import AuthService
+from canvas.modules.auth.auth_service import auth_service
 
 from canvas.utils.jwt import create_access_token, get_current_user
 from canvas.utils.jwt import ACCESS_TOKEN_EXPIRES_MINUTES
 
 router = APIRouter()
-
-auth_service = AuthService()
-
 
 @router.post("/login")
 def login(user_data: User) -> Response:

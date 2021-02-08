@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
 from canvas.modules.auth import auth_repository
-from canvas.modules.routers import auth, user
+from canvas.routers import auth, user, canvas
 from canvas.utils.exceptions import ResponseException
 
 app = FastAPI()
@@ -30,6 +30,7 @@ async def response_exception_handler(request: Request, exp: ResponseException):
 
 app.include_router(auth.router)
 app.include_router(user.router)
+app.include_router(canvas.router)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

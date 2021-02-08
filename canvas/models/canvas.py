@@ -9,3 +9,8 @@ class Canvas(BaseModel):
   rows: int
   columns: int
   data: List[Dict]
+
+class CanvasDataToCreate(BaseModel):
+  user_token: str
+  title: str
+  type: str
