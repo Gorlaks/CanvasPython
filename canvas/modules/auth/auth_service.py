@@ -96,7 +96,7 @@ class AuthService:
 
     if inserted_id != None:
       return {
-        "code": "0",
+        "code": 0,
         "message": "Success"
       }
     else:

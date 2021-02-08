@@ -7,14 +7,16 @@ class CanvasService:
     def __init__(self):
         self.canvas_collection = db["Canvas"]
 
-    def create_canvas(self, data, user_id: str):
-        data["user_token"] = None
-        data["ownerId"] = user_id
-        data["date"] = ""
-        data["rows"] = 4
-        data["columns"] = 5
-        data["data"] = []
-        self.canvas_collection.insert_one(data)
-        return data
+    def create_canvas(self, data: CanvasDataToCreate, user_id: str) -> str:
+        result = self.canvas_collection.insert_one({
+            "title": data.title,
+            "type": data.type,
+            "ownerId": user_id,
+            "date": "",
+            "rows": 4,
+            "columns": 5,
+            "data": []
+        })
+        return str(result.inserted_id)
 
 canvas_service = CanvasService()

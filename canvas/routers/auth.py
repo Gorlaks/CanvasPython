@@ -20,7 +20,12 @@ def login(user_data: User) -> Response:
             data={"sub": authorized_user_data["login"]},
             expires_delta=access_token_expires
         )
-    return { "access_token": access_token }
+    return { 
+        "code": 0,
+        "message": {
+            "access_token": access_token
+        }
+    }
 
 
 @router.post("/registration")
