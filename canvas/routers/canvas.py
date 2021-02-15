@@ -10,6 +10,9 @@ router = APIRouter()
 
 @router.post("/create_canvas", response_model=ServerResponse)
 def create_canvas(data: CanvasDataToCreate):
+    '''
+    Create a new empty Canvas table
+    '''
     user = get_current_user(data.user_token)
     result = canvas_service.create_canvas(data, user["id"])
     return {
