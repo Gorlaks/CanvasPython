@@ -9,6 +9,7 @@ from canvas.models.auth import User
 from canvas.utils.hashing import hash_password, verify_password
 from canvas.utils.helpers import destruct_dict
 from canvas.utils.exceptions import ResponseException
+from canvas.models.response import ServerResponse
 
 class AuthService:
   """Class for the auth module to proccess an information
@@ -63,7 +64,7 @@ class AuthService:
       raise ResponseException("Invalid login")
 
   
-  def registration(self, user_data: User) -> Dict[str, str]:
+  def registration(self, user_data: User) -> ServerResponse:
     """User registration
     
     Parameters

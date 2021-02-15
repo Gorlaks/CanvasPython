@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
-class Response(BaseModel):
+class ServerResponse(BaseModel):
   code: int
   message: str or dict

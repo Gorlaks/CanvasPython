@@ -10,7 +10,7 @@ from canvas.utils.jwt import get_current_user
 
 router = APIRouter()
 
-@router.post("/get_user_canvases")
-def get_user_canvases(user_token: str) -> List[Canvas]:
+@router.post("/get_user_canvases", response_model=List[Canvas])
+def get_user_canvases(user_token: str):
   user = get_current_user(user_token)
   return user_repository.get_user_canvases(user["login"])

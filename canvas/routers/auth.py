@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 from datetime import timedelta
 
-from canvas.models.auth import User
-from canvas.models.response import Response
+from canvas.models.auth import UserSignIn, UserSignUp
+from canvas.models.response import ServerResponse
 from canvas.modules.auth.auth_service import auth_service
 
 from canvas.utils.jwt import create_access_token, get_current_user
@@ -10,8 +10,8 @@ from canvas.utils.jwt import ACCESS_TOKEN_EXPIRES_MINUTES
 
 router = APIRouter()
 
-@router.post("/login")
-def login(user_data: User) -> Response:
+@router.post("/login", response_model=ServerResponse)
+def login(user_data: UserSignIn):
     authorized_user_data = auth_service.login(
         user_data.login, user_data.password)
     if (authorized_user_data["login"]):
@@ -28,6 +28,6 @@ def login(user_data: User) -> Response:
     }
 
 
-@router.post("/registration")
-def registration(user_data: User) -> Response:
+@router.post("/registration", response_model=ServerResponse)
+def registration(user_data: UserSignUp):
     return auth_service.registration(user_data)
