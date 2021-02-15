@@ -15,10 +15,7 @@ def create_canvas(data: CanvasDataToCreate):
     '''
     user = get_current_user(data.user_token)
     result = canvas_service.create_canvas(data, user["id"])
-    return {
-        "code": 0,
-        "message": result
-    }
+    return result
 
 @router.post("/create_canvas_template", response_model=ServerResponse)
 def create_canvas_template(canvasTemplateData: Canvas):
