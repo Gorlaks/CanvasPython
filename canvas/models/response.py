@@ -1,5 +1,6 @@
 from pydantic import BaseModel
+from typing import Union
 
 class ServerResponse(BaseModel):
   code: int
-  message: str or dict
+  message: Union[str, dict]
