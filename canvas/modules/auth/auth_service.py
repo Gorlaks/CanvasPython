@@ -5,7 +5,7 @@ import pytz
 
 from canvas.modules.store.db import db
 from canvas.modules.auth.auth_repository import AuthRepository
-from canvas.models.auth import User
+from canvas.models.user import User
 from canvas.utils.hashing import hash_password, verify_password
 from canvas.utils.helpers import destruct_dict
 from canvas.utils.exceptions import ResponseException

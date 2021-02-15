@@ -3,7 +3,6 @@ from typing import List
 
 from canvas.modules.user.user_repository import user_repository
 
-from canvas.models.user import UserData
 from canvas.models.canvas import Canvas
 
 from canvas.utils.jwt import get_current_user

@@ -1,5 +1,5 @@
 from canvas.modules.store.db import db
-from canvas.models.auth import User
+from canvas.models.user import User
 
 class AuthRepository:
   user_collection = None

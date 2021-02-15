@@ -1,10 +1,20 @@
+from typing import Optional
 from pydantic import BaseModel
+from fastapi import Query
 
-class UserData(BaseModel):
-  login: str
-
-class User(BaseModel):
+class UserBase(BaseModel):
   email: str
   login: str
   password: str
-  registration_date: str
+
+class UserSignIn(UserBase):
+  email: Optional[str] = None
+
+class User(UserSignIn):
+  pass
+
+class UserSignUp(UserSignIn):
+  password: str = Query(None, min_length=6)
+
+class UserTokenData(BaseModel):
+  login: str

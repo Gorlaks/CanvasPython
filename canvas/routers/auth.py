@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from datetime import timedelta
 
-from canvas.models.auth import UserSignIn, UserSignUp
+from canvas.models.user import UserSignIn, UserSignUp
 from canvas.models.response import ServerResponse
 from canvas.modules.auth.auth_service import auth_service
 

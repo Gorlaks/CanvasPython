@@ -5,7 +5,7 @@ from typing import Optional
 from fastapi import HTTPException, status
 
 from canvas.models.jwt import TokenData
-from canvas.models.user import UserData
+from canvas.models.user import UserTokenData
 from canvas.modules.auth.auth_repository import auth_repository
 
 SECRET_KEY = "c603f8eb5cf8796accced19850d80ca93cb397b39e29e73e7d4df581022ea709"
@@ -23,7 +23,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
   encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm = ALGORITHM)
   return encoded_jwt
 
-def get_current_user(token: str) -> UserData:
+def get_current_user(token: str) -> UserTokenData:
   credentials_exception = HTTPException(
     status_code = status.HTTP_401_UNAUTHORIZED,
     detail = "Couldn't validate credentials",
