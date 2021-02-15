@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from canvas.models.canvas import CanvasDataToCreate
+from canvas.models.canvas import Canvas, CanvasDataToCreate
 from canvas.utils.jwt import get_current_user
 from canvas.modules.canvas.canvas_service import canvas_service
 from canvas.models.response import ServerResponse
@@ -19,3 +19,11 @@ def create_canvas(data: CanvasDataToCreate):
         "code": 0,
         "message": result
     }
+
+@router.post("/create_canvas_template", response_model=ServerResponse)
+def create_canvas_template(canvasTemplateData: Canvas):
+    '''
+    Create a new template of Canvas table
+    '''
+    result = canvas_service.create_canvas_template(canvasTemplateData)
+    return result
