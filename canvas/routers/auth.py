@@ -30,4 +30,14 @@ def login(user_data: UserSignIn):
 
 @router.post("/registration", response_model=ServerResponse)
 def registration(user_data: UserSignUp):
-    return auth_service.registration(user_data)
+    response = auth_service.registration(user_data)
+    try:
+        code = response.error_code
+    except:
+        code = 0
+    return {
+        "code": code,
+        "message": {
+            "Data": response
+        }
+    }
