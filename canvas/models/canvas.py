@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 class Canvas(BaseModel):
   ownerId: str
@@ -9,6 +9,11 @@ class Canvas(BaseModel):
   rows: int
   columns: int
   data: List[Dict]
+
+class CanvasTemplate(Canvas):
+  user_token: str
+  ownerId: Optional[str] = None
+  title: Optional[str] = None
 
 class CanvasDataToCreate(BaseModel):
   user_token: str
