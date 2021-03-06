@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List, Dict, Optional
 
 class Canvas(BaseModel):
-  ownerId: str
+  owner_id: str
   title: str
   type: str
   date: str
@@ -12,10 +12,14 @@ class Canvas(BaseModel):
 
 class CanvasTemplate(Canvas):
   user_token: str
-  ownerId: Optional[str] = None
+  owner_id: Optional[str] = None
   title: Optional[str] = None
 
 class CanvasDataToCreate(BaseModel):
   user_token: str
   title: str
   type: str
+
+class CanvasTemplateToDelete(BaseModel):
+  user_token: str
+  canvas_id: str

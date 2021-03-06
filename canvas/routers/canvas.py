@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from canvas.models.canvas import CanvasTemplate, CanvasDataToCreate
+from canvas.models.canvas import CanvasTemplate, CanvasDataToCreate, CanvasTemplateToDelete
 from canvas.utils.jwt import get_current_user
 from canvas.modules.canvas.canvas_service import canvas_service
 from canvas.models.response import ServerResponse
@@ -18,6 +18,7 @@ def create_canvas(data: CanvasDataToCreate):
     result = canvas_service.create_canvas(data, user["id"])
     return result
 
+
 @router.post("/create_canvas_template", response_model=ServerResponse)
 def create_canvas_template(canvasTemplateData: CanvasTemplate):
     '''
@@ -26,12 +27,20 @@ def create_canvas_template(canvasTemplateData: CanvasTemplate):
     user = get_current_user(canvasTemplateData.user_token)
 
     if (user["login"] != "admin"):
-        raise ResponseException("You have to be an admin to create a new canvas template")
+        raise ResponseException(
+            "You have to be an admin to create a new canvas template")
 
     result = canvas_service.create_canvas_template(canvasTemplateData)
-    return {
-        "code": 0,
-        "message": {
-            "data": result
-        }
-    }
+    return result
+
+
+@router.post("/delete_canvas_template", response_model=ServerResponse)
+def delete_canvas_template(data: CanvasTemplateToDelete):
+    user = get_current_user(data.user_token)
+    
+    if (user["login"] != "admin"):
+        raise ResponseException(
+            "You have to be an admin to create a new canvas template")
+
+    result = canvas_service.delete_canvas_template(data)
+    return result
