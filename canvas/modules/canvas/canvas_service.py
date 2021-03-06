@@ -2,7 +2,7 @@ from fastapi.encoders import jsonable_encoder
 from datetime import datetime
 
 from canvas.modules.store.db import db
-from canvas.models.canvas import CanvasTemplate, CanvasDataToCreate, CanvasTemplateToDelete
+from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasTemplateToDelete
 from canvas.models.response import ServerResponse
 from canvas.modules.canvas.canvas_repository import canvas_repository
 from canvas.utils.exceptions import ResponseException
@@ -35,8 +35,9 @@ class CanvasService:
             }
         }
 
-    def create_canvas_template(self, canvasTemplateData: CanvasTemplate) -> ServerResponse:
-        if not canvasTemplateData.type:
+    def create_canvas_template(self, canvasTemplateData: CanvasTemplateToCreate) -> ServerResponse:
+        canvas_type = canvasTemplateData.type
+        if not canvas_type:
             raise ResponseException("Type is not set")
         if not canvasTemplateData.rows:
             raise ResponseException("Rows are not set")
@@ -45,10 +46,16 @@ class CanvasService:
         if not canvasTemplateData.data:
             raise ResponseException("Data are not set")
 
+        isExist = self.canvas_template_collection.find_one(
+            {"type": canvas_type}) != None
+
+        if (isExist):
+            raise ResponseException("Such Canvas type is already exist")
+
         result = self.canvas_template_collection.insert_one({
             "ownerId": None,
             "title": None,
-            "type": canvasTemplateData.type,
+            "type": canvas_type,
             "date": datetime.now(),
             "rows": canvasTemplateData.rows,
             "columns": canvasTemplateData.columns,
@@ -61,9 +68,8 @@ class CanvasService:
 
     def delete_canvas_template(self, data: CanvasTemplateToDelete) -> ServerResponse:
         try:
-            canvas_id = data.canvas_id
-            self.canvas_template_collection.delete_one({"canvasId": canvas_id})
-
+            canvas_type = data.canvas_type
+            self.canvas_template_collection.delete_one({"type": canvas_type})
             return {
                 "code": 0,
                 "message": "Success"

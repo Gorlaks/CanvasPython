@@ -10,8 +10,12 @@ class Canvas(BaseModel):
   columns: int
   data: List[Dict]
 
-class CanvasTemplate(Canvas):
+class CanvasTemplateToCreate(Canvas):
   user_token: str
+  owner_id: Optional[str] = None
+  title: Optional[str] = None
+
+class CanvasTemplate(Canvas):
   owner_id: Optional[str] = None
   title: Optional[str] = None
 
@@ -22,4 +26,4 @@ class CanvasDataToCreate(BaseModel):
 
 class CanvasTemplateToDelete(BaseModel):
   user_token: str
-  canvas_id: str
+  canvas_type: str
