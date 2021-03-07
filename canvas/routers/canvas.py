@@ -21,6 +21,13 @@ def create_canvas(data: CanvasDataToCreate):
     return result
 
 
+@router.delete("/delete_canvas", response_model=ServerResponse)
+def delete_canvas(user_token: str, canvas_id: str):
+    user = get_current_user(user_token)
+    result = canvas_service.delete_canvas(user["id"], canvas_id)
+    return result
+
+
 @router.post("/create_canvas_template", response_model=ServerResponse)
 def create_canvas_template(canvasTemplateData: CanvasTemplateToCreate):
     '''

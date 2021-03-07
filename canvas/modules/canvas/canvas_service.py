@@ -1,5 +1,6 @@
 from fastapi.encoders import jsonable_encoder
 from datetime import datetime
+from bson.objectid import ObjectId
 
 from canvas.modules.store.db import db
 from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasTemplateToDelete
@@ -34,6 +35,16 @@ class CanvasService:
                 "created_canvas_id": str(result.inserted_id)
             }
         }
+
+    def delete_canvas(self, user_id: str, canvas_id: str) -> ServerResponse:
+        try:
+            result = self.canvas_collection.delete_one({ "ownerId": user_id, "_id": ObjectId(canvas_id) })
+            return {
+                "code": 0,
+                "message": "Success"
+            }
+        except Exception:
+            raise ResponseException(Exception)
 
     def create_canvas_template(self, canvasTemplateData: CanvasTemplateToCreate) -> ServerResponse:
         canvas_type = canvasTemplateData.type
