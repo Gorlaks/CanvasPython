@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasTemplateToDelete
+from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate
 from canvas.utils.jwt import get_current_user
 from canvas.modules.canvas.canvas_service import canvas_service
 from canvas.modules.canvas.canvas_repository import canvas_repository
@@ -39,11 +39,11 @@ def create_canvas_template(canvasTemplateData: CanvasTemplateToCreate):
     return result
 
 
-@router.post("/delete_canvas_template", response_model=ServerResponse)
-def delete_canvas_template(data: CanvasTemplateToDelete):
-    user = check_for_admin(data.user_token)
+@router.delete("/delete_canvas_template", response_model=ServerResponse)
+def delete_canvas_template(user_token: str, canvas_type: str):
+    user = check_for_admin(user_token)
 
-    result = canvas_service.delete_canvas_template(data)
+    result = canvas_service.delete_canvas_template(canvas_type)
     return result
 
 

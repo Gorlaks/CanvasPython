@@ -27,8 +27,3 @@ class CanvasTemplateToCreate(Canvas):
 class CanvasTemplate(Canvas):
     owner_id: Optional[str] = None
     title: Optional[str] = None
-
-
-class CanvasTemplateToDelete(BaseModel):
-    user_token: str
-    canvas_type: str

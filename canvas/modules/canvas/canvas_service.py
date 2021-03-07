@@ -3,7 +3,7 @@ from datetime import datetime
 from bson.objectid import ObjectId
 
 from canvas.modules.store.db import db
-from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasTemplateToDelete
+from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate
 from canvas.models.response import ServerResponse
 from canvas.modules.canvas.canvas_repository import canvas_repository
 from canvas.utils.exceptions import ResponseException
@@ -77,9 +77,8 @@ class CanvasService:
             "message": "Success"
         }
 
-    def delete_canvas_template(self, data: CanvasTemplateToDelete) -> ServerResponse:
+    def delete_canvas_template(self, canvas_type: str) -> ServerResponse:
         try:
-            canvas_type = data.canvas_type
             self.canvas_template_collection.delete_one({"type": canvas_type})
             return {
                 "code": 0,
