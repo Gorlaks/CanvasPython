@@ -6,11 +6,17 @@ class Canvas(BaseModel):
     owner_id: str
     title: str
     type: str
-    date: str
     rows: int
     columns: int
     data: List[Dict]
 
+
+class CanvasDataToUpdate(BaseModel):
+    user_token: str
+    canvas_id: str
+    title: str
+    data: List[Dict]
+    
 
 class CanvasDataToCreate(BaseModel):
     user_token: str

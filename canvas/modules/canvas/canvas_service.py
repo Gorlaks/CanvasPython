@@ -3,7 +3,7 @@ from datetime import datetime
 from bson.objectid import ObjectId
 
 from canvas.modules.store.db import db
-from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate
+from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasDataToUpdate
 from canvas.models.response import ServerResponse
 from canvas.modules.canvas.canvas_repository import canvas_repository
 from canvas.utils.exceptions import ResponseException
@@ -38,7 +38,21 @@ class CanvasService:
 
     def delete_canvas(self, user_id: str, canvas_id: str) -> ServerResponse:
         try:
-            result = self.canvas_collection.delete_one({ "ownerId": user_id, "_id": ObjectId(canvas_id) })
+            result = self.canvas_collection.delete_one(
+                {"ownerId": user_id, "_id": ObjectId(canvas_id)})
+            return {
+                "code": 0,
+                "message": "Success"
+            }
+        except Exception:
+            raise ResponseException(Exception)
+
+    def update_canvas(self, data: CanvasDataToUpdate, user_id: str) -> ServerResponse:
+        try:
+            result = self.canvas_collection.update_one(
+                {"ownerId": user_id, "_id": ObjectId(data.canvas_id)},
+                {"$set": {"title": data.title, "data": data.data}}
+            )
             return {
                 "code": 0,
                 "message": "Success"
