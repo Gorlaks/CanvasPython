@@ -10,6 +10,12 @@ from canvas.utils.helpers import check_for_admin
 
 router = APIRouter()
 
+@router.get("/get_canvas", response_model=ServerResponse)
+def get_canvas(user_token: str, canvas_id: str):
+    user = get_current_user(user_token)
+    result = canvas_repository.get_canvas(user["id"], canvas_id)
+    return result
+
 
 @router.post("/create_canvas", response_model=ServerResponse)
 def create_canvas(data: CanvasDataToCreate):
