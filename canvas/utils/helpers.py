@@ -8,8 +8,8 @@ def destruct_dict(data: Dict[str, str]) -> str:
     return list(map(lambda x: x[1], sorted(data)))
 
 
-def check_for_admin(user_token: str):
-    user = get_current_user(user_token)
+def check_for_admin(access_token: str):
+    user = get_current_user(access_token)
 
     if (user["login"] != "admin"):
         raise ResponseException(

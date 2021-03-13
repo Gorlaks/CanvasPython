@@ -12,20 +12,20 @@ class Canvas(BaseModel):
 
 
 class CanvasDataToUpdate(BaseModel):
-    user_token: str
+    access_token: str
     canvas_id: str
     title: str
     data: List[Dict]
     
 
 class CanvasDataToCreate(BaseModel):
-    user_token: str
+    access_token: str
     title: str
     type: str
 
 
 class CanvasTemplateToCreate(Canvas):
-    user_token: str
+    access_token: str
     owner_id: Optional[str] = None
     title: Optional[str] = None
 

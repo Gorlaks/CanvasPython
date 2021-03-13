@@ -11,8 +11,8 @@ from canvas.utils.helpers import check_for_admin
 router = APIRouter()
 
 @router.get("/get_canvas", response_model=ServerResponse)
-def get_canvas(user_token: str, canvas_id: str):
-    user = get_current_user(user_token)
+def get_canvas(access_token: str, canvas_id: str):
+    user = get_current_user(access_token)
     result = canvas_repository.get_canvas(user["id"], canvas_id)
     return result
 
@@ -22,21 +22,21 @@ def create_canvas(data: CanvasDataToCreate):
     '''
     Create a new empty Canvas table
     '''
-    user = get_current_user(data.user_token)
+    user = get_current_user(data.access_token)
     result = canvas_service.create_canvas(data, user["id"])
     return result
 
 
 @router.delete("/delete_canvas", response_model=ServerResponse)
-def delete_canvas(user_token: str, canvas_id: str):
-    user = get_current_user(user_token)
+def delete_canvas(access_token: str, canvas_id: str):
+    user = get_current_user(access_token)
     result = canvas_service.delete_canvas(user["id"], canvas_id)
     return result
 
 
 @router.post("/update_canvas", response_model=ServerResponse)
 def delete_canvas(data: CanvasDataToUpdate):
-    user = get_current_user(data.user_token)
+    user = get_current_user(data.access_token)
     result = canvas_service.update_canvas(data, user["id"])
     return result
 
@@ -46,23 +46,22 @@ def create_canvas_template(canvasTemplateData: CanvasTemplateToCreate):
     '''
     Create a new template of Canvas table
     '''
-    user = check_for_admin(canvasTemplateData.user_token)
+    user = check_for_admin(canvasTemplateData.access_token)
 
     result = canvas_service.create_canvas_template(canvasTemplateData)
     return result
 
 
 @router.delete("/delete_canvas_template", response_model=ServerResponse)
-def delete_canvas_template(user_token: str, canvas_type: str):
-    user = check_for_admin(user_token)
+def delete_canvas_template(access_token: str, canvas_type: str):
+    user = check_for_admin(access_token)
 
     result = canvas_service.delete_canvas_template(canvas_type)
     return result
 
 
 @router.get("/canvas_templates", response_model=ServerResponse)
-def get_canvas_templates(user_token: str):
-    user = check_for_admin(user_token)
+def get_canvas_templates(access_token: str):
     result = canvas_repository.get_canvas_templates()
     return {
         "code": 0,

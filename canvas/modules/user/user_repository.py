@@ -11,8 +11,11 @@ class UserRepository:
     def __init__(self):
         self.canvas_collection = db["Canvas"]
 
-    def get_user_canvases(self, login):
-        canvases = self.canvas_collection.find_one({"login": login})
+    def get_user_canvases(self, ownerId):
+        canvases: List[Canvas] = list(self.canvas_collection.find({"ownerId": ownerId}))
+        print(canvases)
+        for canvas in canvases:
+            canvas["_id"] = str(canvas["_id"])
         return canvases
 
 user_repository = UserRepository()
