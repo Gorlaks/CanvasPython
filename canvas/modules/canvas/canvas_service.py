@@ -3,7 +3,7 @@ from datetime import datetime
 from bson.objectid import ObjectId
 
 from canvas.modules.store.db import db
-from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasDataToUpdate, CanvasToPdf
+from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasDataToUpdate
 from canvas.models.response import ServerResponse
 from canvas.modules.canvas.canvas_repository import canvas_repository
 from canvas.utils.exceptions import ResponseException
