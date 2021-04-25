@@ -24,10 +24,12 @@ class CanvasDataToCreate(BaseModel):
     type: str
 
 
-class CanvasTemplateToCreate(Canvas):
+class CanvasTemplateToCreate(BaseModel):
     access_token: str
-    owner_id: Optional[str] = None
-    title: Optional[str] = None
+    type: str
+    rows: int
+    columns: int
+    data: List[Dict]
 
 
 class CanvasTemplate(Canvas):

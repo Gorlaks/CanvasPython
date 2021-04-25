@@ -3,7 +3,7 @@ from datetime import datetime
 from bson.objectid import ObjectId
 
 from canvas.modules.store.db import db
-from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasDataToUpdate
+from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasDataToUpdate, CanvasToPdf
 from canvas.models.response import ServerResponse
 from canvas.modules.canvas.canvas_repository import canvas_repository
 from canvas.utils.exceptions import ResponseException
@@ -20,6 +20,10 @@ class CanvasService:
     def create_canvas(self, canvas_data: CanvasDataToCreate, user_id: str) -> str:
         canvas_template = canvas_repository.get_canvas_template(
             canvas_data.type)
+
+        if canvas_template is None:
+            raise ResponseException("Incorrect canvas type")
+
         result = self.canvas_collection.insert_one({
             "ownerId": user_id,
             "title": canvas_data.title,
@@ -42,7 +46,9 @@ class CanvasService:
                 {"ownerId": user_id, "_id": ObjectId(canvas_id)})
             return {
                 "code": 0,
-                "message": "Success"
+                "message": {
+                    "deleted_canvas_id": canvas_id
+                }
             }
         except Exception:
             raise ResponseException(Exception)

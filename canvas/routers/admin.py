@@ -9,7 +9,7 @@ from canvas.models.response import ServerResponse
 router = APIRouter()
 
 
-@router.post("/admin/get_users", response_model=ServerResponse)
+@router.get("/admin/get_users", response_model=ServerResponse)
 def get_users(access_token: str):
     user = get_current_user(access_token)
     if user["login"] == "admin":
