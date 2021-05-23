@@ -14,7 +14,12 @@ def send_mail(data: CanvasDataToSend):
     SUBJECT = "New project idea"
     FROM = sender_email
     TO = receiver_email
-    text = data.data[0]['content']
+    text = ''
+
+    for item in data.data:
+        content = item['content']
+        title = item['title']
+        text += f'{title} - {content}\n'
 
     BODY = "\r\n".join((
         "From: %s" % FROM,
