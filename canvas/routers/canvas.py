@@ -1,12 +1,15 @@
 from fastapi import APIRouter
 
-from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasDataToUpdate
+from canvas.models.canvas import CanvasTemplateToCreate, CanvasDataToCreate, CanvasDataToUpdate, CanvasDataToSend
 from canvas.utils.jwt import get_current_user
 from canvas.modules.canvas.canvas_service import canvas_service
 from canvas.modules.canvas.canvas_repository import canvas_repository
 from canvas.models.response import ServerResponse
 from canvas.utils.exceptions import ResponseException
 from canvas.utils.helpers import check_for_admin
+
+from canvas.modules.spam_detection.mail import send_mail
+from canvas.modules.spam_detection.spam_detection import check_data_for_spam
 
 router = APIRouter()
 
@@ -69,3 +72,14 @@ def get_canvas_templates(access_token: str):
             "data": result
         }
     }
+
+@router.post("/send_canvas_to_mail")
+def send_canvas_to_mail(data: CanvasDataToSend):
+    isItSpam = check_data_for_spam(data)
+    if (isItSpam != True):
+        send_mail(data)
+    else:
+        return {
+            "code": 1,
+            "message": "spam"
+        }

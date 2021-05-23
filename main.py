@@ -3,11 +3,13 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 
+from canvas.modules.spam_detection.spam_detection import study
 from canvas.modules.auth import auth_repository
 from canvas.routers import auth, user, canvas, admin
 from canvas.utils.exceptions import ResponseException
 
 app = FastAPI()
+study()
 
 app.add_middleware(
     CORSMiddleware,

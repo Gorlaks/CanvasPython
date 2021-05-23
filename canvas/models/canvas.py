@@ -11,6 +11,11 @@ class Canvas(BaseModel):
     data: List[Dict]
 
 
+class CanvasDataToSend(BaseModel):
+    title: str
+    data: List[Dict]
+    
+
 class CanvasDataToUpdate(BaseModel):
     access_token: str
     canvas_id: str
