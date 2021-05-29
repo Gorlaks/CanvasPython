@@ -10,7 +10,7 @@ from canvas.modules.auth.auth_repository import auth_repository
 
 SECRET_KEY = "c603f8eb5cf8796accced19850d80ca93cb397b39e29e73e7d4df581022ea709"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRES_MINUTES = 30
+ACCESS_TOKEN_EXPIRES_MINUTES = 240
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
   to_encode = data.copy()
