@@ -3,6 +3,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
+from canvas.utils.exceptions import ResponseException
 
 from canvas.models.canvas import CanvasDataToSend
 
@@ -34,8 +35,7 @@ def check_data_for_spam(data: CanvasDataToSend):
     for item in data.data:
         content = item['content']
         if (len(content) == 0):
-            return 'Fill all fields'
-            break
+            raise ResponseException('Fill all fields')
         res = find_spam(content)
         if (res == 'spam'):
             total_spam += 1
